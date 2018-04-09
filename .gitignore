@@ -168,6 +168,3 @@ venv.bak/
 
 
 # End of https://www.gitignore.io/api/python,pycharm
-
-#temp files
-temp/*
