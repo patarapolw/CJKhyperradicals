@@ -16,6 +16,10 @@ def resource_path(relative_path):
     return os.path.join(base_path, PROJECT_NAME, relative_path)
 
 
+def temp_path(data):
+    return resource_path(os.path.join('temp', data))
+
+
 def database_path(data):
     return resource_path(os.path.join('database', data))
 
