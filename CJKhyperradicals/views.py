@@ -2,6 +2,7 @@ import regex
 import requests
 from gtts import gTTS
 import os
+import sys
 from uuid import uuid4
 import subprocess
 
@@ -73,18 +74,18 @@ def index():
 @app.route('/speak', methods=['POST'])
 def speak():
     if request.method == 'POST':
-        # speaker = {
-        #     'zh-CN': 'ting-ting',
-        #     'ja': 'kyoko'
-        # }.get(request.form['lang'])
-        # Popen(['say', '-v', speaker, request.form['vocab']])
-        # speech = Speech(request.form['vocab'], request.form['lang'])
-        # speech.play(())
-        tts = gTTS(request.form['vocab'], request.form['lang'])
-        temp_file = str(uuid4())
-        tts.save(temp_path(temp_file))
+        if sys.platform == 'darwin':
+            speaker = {
+                'zh-CN': 'ting-ting',
+                'ja': 'kyoko'
+            }.get(request.form['lang'])
+            subprocess.Popen(['say', '-v', speaker, request.form['vocab']])
+        else:
+            tts = gTTS(request.form['vocab'], request.form['lang'])
+            temp_file = str(uuid4())
+            tts.save(temp_path(temp_file))
 
-        subprocess.call(['ffplay', "-nodisp", "-autoexit", temp_path(temp_file)])
-        os.remove(temp_path(temp_file))
+            subprocess.call(['ffplay', "-nodisp", "-autoexit", temp_path(temp_file)])
+            os.remove(temp_path(temp_file))
 
     return ""
