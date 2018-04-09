@@ -1,14 +1,18 @@
 import regex
 import requests
-from google_speech import Speech
+from gtts import gTTS
+import os
+from uuid import uuid4
+import subprocess
 
 from flask import render_template, request
 
 from CJKhyperradicals import app
 from CJKhyperradicals.decompose import Decompose
-from CJKhyperradicals.dict import Cedict, Edict2
+from CJKhyperradicals.dict import Cedict
 from CJKhyperradicals.frequency import ChineseFrequency, JapaneseFrequency
 from CJKhyperradicals.variant import Variant
+from CJKhyperradicals.dir import temp_path
 
 decompose = Decompose()
 variant = Variant()
@@ -74,7 +78,13 @@ def speak():
         #     'ja': 'kyoko'
         # }.get(request.form['lang'])
         # Popen(['say', '-v', speaker, request.form['vocab']])
-        speech = Speech(request.form['vocab'], request.form['lang'])
-        speech.play(())
+        # speech = Speech(request.form['vocab'], request.form['lang'])
+        # speech.play(())
+        tts = gTTS(request.form['vocab'], request.form['lang'])
+        temp_file = str(uuid4())
+        tts.save(temp_path(temp_file))
+
+        subprocess.call(['ffplay', "-nodisp", "-autoexit", temp_path(temp_file)])
+        os.remove(temp_path(temp_file))
 
     return ""
