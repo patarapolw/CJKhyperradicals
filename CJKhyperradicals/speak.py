@@ -1,20 +1,26 @@
 from gtts import gTTS
 from uuid import uuid4
-from pydub import AudioSegment
+from tempfile import TemporaryFile
 import os
-import simpleaudio as sa
+import pygame
 
 from CJKhyperradicals.dir import temp_path
 
 
 def universal_say(word, lang):
-    tts = gTTS('hello', 'en-us')
+    tts = gTTS(word, lang)
     temp_file = temp_path(str(uuid4()))
-    tts.save(temp_path(temp_file))
+    tts.save(temp_file)
 
-    AudioSegment.from_mp3(temp_file).export(temp_file, 'wav')
-    wave_obj = sa.WaveObject.from_wave_file(temp_file)
-    play_obj = wave_obj.play()
-    play_obj.wait_done()
+    pygame.mixer.init()
+    pygame.mixer.music.load(temp_file)
+    pygame.mixer.music.play()
 
     os.remove(temp_file)
+
+
+if __name__ == '__main__':
+    universal_say('hello', 'en-us')
+
+    from time import sleep
+    sleep(5)
