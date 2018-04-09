@@ -4,7 +4,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="10">
+          <list size="13">
             <item index="0" class="java.lang.String" itemvalue="bs4" />
             <item index="1" class="java.lang.String" itemvalue="jieba" />
             <item index="2" class="java.lang.String" itemvalue="google_speech" />
@@ -15,6 +15,9 @@
             <item index="7" class="java.lang.String" itemvalue="xmltodict" />
             <item index="8" class="java.lang.String" itemvalue="Pillow" />
             <item index="9" class="java.lang.String" itemvalue="google-speech" />
+            <item index="10" class="java.lang.String" itemvalue="pygame" />
+            <item index="11" class="java.lang.String" itemvalue="playsound" />
+            <item index="12" class="java.lang.String" itemvalue="pyglet" />
           </list>
         </value>
       </option>

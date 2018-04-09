@@ -1,13 +1,7 @@
 import regex
 import requests
-from gtts import gTTS
-import os
 import sys
-from uuid import uuid4
 import subprocess
-from pydub.playback import play
-from pydub import AudioSegment
-from time import sleep
 
 from flask import render_template, request
 
@@ -16,7 +10,7 @@ from CJKhyperradicals.decompose import Decompose
 from CJKhyperradicals.dict import Cedict
 from CJKhyperradicals.frequency import ChineseFrequency, JapaneseFrequency
 from CJKhyperradicals.variant import Variant
-from CJKhyperradicals.dir import temp_path
+from CJKhyperradicals.speak import universal_say
 
 decompose = Decompose()
 variant = Variant()
@@ -84,13 +78,6 @@ def speak():
             }.get(request.form['lang'])
             subprocess.Popen(['say', '-v', speaker, request.form['vocab']])
         else:
-            tts = gTTS(request.form['vocab'], request.form['lang'])
-            temp_file = str(uuid4())
-            tts.save(temp_path(temp_file))
-
-            audio = AudioSegment.from_file(temp_path(temp_file), 'mp3')
-            play(audio)
-            sleep(audio.duration_seconds)
-            os.remove(temp_path(temp_file))
+            universal_say(request.form['vocab'], request.form['lang'])
 
     return ""
