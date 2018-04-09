@@ -5,6 +5,9 @@ import os
 import sys
 from uuid import uuid4
 import subprocess
+from pydub.playback import play
+from pydub import AudioSegment
+from time import sleep
 
 from flask import render_template, request
 
@@ -85,7 +88,9 @@ def speak():
             temp_file = str(uuid4())
             tts.save(temp_path(temp_file))
 
-            subprocess.call(['ffplay', "-nodisp", "-autoexit", temp_path(temp_file)])
+            audio = AudioSegment.from_file(temp_path(temp_file), 'mp3')
+            play(audio)
+            sleep(audio.duration_seconds)
             os.remove(temp_path(temp_file))
 
     return ""
