@@ -1,0 +1,25 @@
+altgraph==0.15
+-e git+https://github.com/patarapolw/relatedCJchar.git@1dc85bc3ceb289db40d6ae957520bfa61d056d2d#egg=CJKrelate
+click==6.7
+edictreader==0.2.0
+Flask==0.12.2
+fonttools==3.25.0
+itsdangerous==0.24
+jieba==0.39
+Jinja2==2.10
+langcodes==1.4.1
+lxml==4.2.1
+macholib==1.9
+marisa-trie==0.7.4
+MarkupSafe==1.0
+modulegraph==0.16
+msgpack==0.5.6
+Pillow==5.1.0
+py2app==0.14
+PyQt5==5.10.1
+PyYAML==3.12
+regex==2018.2.21
+sip==4.19.8
+Werkzeug==0.14.1
+wordfreq==2.0
+xmltodict==0.11.0
