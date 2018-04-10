@@ -1,5 +1,7 @@
 import regex
 import requests
+import subprocess
+import sys
 
 from flask import render_template, request, send_from_directory
 
@@ -69,12 +71,14 @@ def index():
 @app.route('/speak', methods=['POST'])
 def speak():
     if request.method == 'POST':
-        # speaker = {
-        #     'zh-CN': 'ting-ting',
-        #     'ja': 'kyoko'
-        # }.get(request.form['lang'])
-        # subprocess.Popen(['say', '-v', speaker, request.form['vocab']])
-
-        return send_from_directory('tmp', client_say(request.form['vocab'], request.form['lang']))
+        if request.url_root == 'http://127.0.0.1:5050/' and sys.platform == 'darwin':
+            speaker = {
+                'zh-CN': 'ting-ting',
+                'ja': 'kyoko'
+            }.get(request.form['lang'])
+            subprocess.Popen(['say', '-v', speaker, request.form['vocab']])
+            return b''
+        else:
+            return send_from_directory('tmp', client_say(request.form['vocab'], request.form['lang']))
 
     return ""

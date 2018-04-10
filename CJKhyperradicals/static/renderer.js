@@ -34,7 +34,7 @@ for(var i=0; i<supercompositions.length; i++){
 
 for(var i=0; i<variants.length; i++){
     class_name = "character";
-    document.getElementById("supercompositions").insertAdjacentHTML('beforeend',
+    document.getElementById("variants").insertAdjacentHTML('beforeend',
         "<div class='{0}' onclick='loadVocab(\"{1}\")'>{1}</div> ".format(class_name, variants[i]));
 }
 
