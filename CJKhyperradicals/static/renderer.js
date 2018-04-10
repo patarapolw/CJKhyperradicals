@@ -55,9 +55,22 @@ else {
 }
 
 function speak(vocab, lang){
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var source = audioCtx.createBufferSource();
     var xhr = new XMLHttpRequest();
     xhr.open("POST", '/speak', true);
     xhr.setRequestHeader('Content-Type', "application/x-www-form-urlencoded; charset=UTF-8");
+    xhr.responseType = 'arraybuffer';
+    xhr.addEventListener('load', function (r) {
+        audioCtx.decodeAudioData(
+            xhr.response,
+            function (buffer) {
+                source.buffer = buffer;
+                source.connect(audioCtx.destination);
+                source.loop = false;
+            });
+        source.start(0);
+    });
     xhr.send("vocab=" + vocab + "&lang=" + lang);
 }
 

@@ -1,26 +1,21 @@
 from gtts import gTTS
 from uuid import uuid4
-from tempfile import TemporaryFile
 import os
-import pygame
+import atexit
 
-from CJKhyperradicals.dir import temp_path
+from CJKhyperradicals.dir import tmp_path
 
 
-def universal_say(word, lang):
+def client_say(word, lang):
     tts = gTTS(word, lang)
-    temp_file = temp_path(str(uuid4()))
+    filename = str(uuid4()) + '.mp3'
+    temp_file = tmp_path(filename)
     tts.save(temp_file)
 
-    pygame.mixer.init()
-    pygame.mixer.music.load(temp_file)
-    pygame.mixer.music.play()
+    atexit.register(os.remove, temp_file)
 
-    os.remove(temp_file)
+    return filename
 
 
 if __name__ == '__main__':
-    universal_say('hello', 'en-us')
-
-    from time import sleep
-    sleep(5)
+    pass

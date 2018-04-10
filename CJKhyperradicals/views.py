@@ -1,16 +1,14 @@
 import regex
 import requests
-import sys
-import subprocess
 
-from flask import render_template, request
+from flask import render_template, request, send_from_directory
 
 from CJKhyperradicals import app
 from CJKhyperradicals.decompose import Decompose
 from CJKhyperradicals.dict import Cedict
 from CJKhyperradicals.frequency import ChineseFrequency, JapaneseFrequency
 from CJKhyperradicals.variant import Variant
-from CJKhyperradicals.speak import universal_say
+from CJKhyperradicals.speak import client_say
 
 decompose = Decompose()
 variant = Variant()
@@ -71,13 +69,12 @@ def index():
 @app.route('/speak', methods=['POST'])
 def speak():
     if request.method == 'POST':
-        if sys.platform == 'darwin':
-            speaker = {
-                'zh-CN': 'ting-ting',
-                'ja': 'kyoko'
-            }.get(request.form['lang'])
-            subprocess.Popen(['say', '-v', speaker, request.form['vocab']])
-        else:
-            universal_say(request.form['vocab'], request.form['lang'])
+        # speaker = {
+        #     'zh-CN': 'ting-ting',
+        #     'ja': 'kyoko'
+        # }.get(request.form['lang'])
+        # subprocess.Popen(['say', '-v', speaker, request.form['vocab']])
+
+        return send_from_directory('tmp', client_say(request.form['vocab'], request.form['lang']))
 
     return ""
