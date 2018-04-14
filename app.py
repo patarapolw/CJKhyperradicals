@@ -1,4 +1,4 @@
-from CJKhyperradicals import app
+from webview import app
 
 
 if __name__ == '__main__':
