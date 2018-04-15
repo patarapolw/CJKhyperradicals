@@ -4,13 +4,13 @@ import subprocess
 import sys
 import json
 
-from flask import render_template, request, send_from_directory
+from flask import render_template, request
 
 from CJKhyperradicals.decompose import Decompose
 from CJKhyperradicals.dict import Cedict
 from CJKhyperradicals.frequency import ChineseFrequency, JapaneseFrequency
 from CJKhyperradicals.variant import Variant
-from CJKhyperradicals.speak import client_say
+from CJKhyperradicals.tts import Tts
 from CJKhyperradicals.sentence import jukuu, wwwjdic
 
 from webview import app
@@ -85,6 +85,7 @@ def index():
 def speak():
     if request.method == 'POST':
         if request.url_root == 'http://127.0.0.1:5050/' and sys.platform == 'darwin':
+        # if False:
             speaker = {
                 'zh-CN': 'ting-ting',
                 'ja': 'kyoko'
@@ -92,6 +93,6 @@ def speak():
             subprocess.Popen(['say', '-v', speaker, request.form['vocab']])
             return ""
         else:
-            return send_from_directory('tmp', client_say(request.form['vocab'], request.form['lang']))
+            return Tts(request.form['vocab'], request.form['lang']).to_base64()
 
     return ""

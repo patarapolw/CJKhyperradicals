@@ -34,7 +34,6 @@ $('#sentenceSubmit').click(function(){
 
 function renderChar(content){
     content = JSON.parse(content);
-    console.log(content);
 
     if(!isNaN(parseInt(content.currentChar))){
         $('#character').html('<div class="number">' + content.currentChar + '</div>');
@@ -95,20 +94,12 @@ function speak(vocab, lang){
         data: {
             'vocab': vocab,
             'lang': lang
-        },
-        dataType: 'arraybuffer'
+        }
     }).done(function(response){
-        if (!(location.hostname === "localhost" || location.hostname === "127.0.0.1")){
-            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            var source = audioCtx.createBufferSource();
-            audioCtx.decodeAudioData(
-                response,
-                function (buffer) {
-                    source.buffer = buffer;
-                    source.connect(audioCtx.destination);
-                    source.loop = false;
-                });
-            source.start(0);
+        if (!(location.hostname === "localhost" || location.hostname === "127.0.0.1"))
+        {
+            var snd = new Audio("data:audio/x-mp3;base64," + response);
+            snd.play();
         }
     })
 }
