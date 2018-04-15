@@ -12,6 +12,8 @@ class Tts:
 
     def to_temp(self, temp: str=None):
         if temp is None:
+            if not os.path.exists('tmp'):
+                os.mkdir('tmp')
             temp = os.path.join('tmp', str(uuid4()) + '.mp3')
 
         atexit.register(os.remove, temp)
