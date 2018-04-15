@@ -93,6 +93,6 @@ def speak():
             subprocess.Popen(['say', '-v', speaker, request.form['vocab']])
             return ""
         else:
-            return Tts(request.form['vocab'], request.form['lang']).to_base64()
+            return Tts(request.form['vocab'], request.form['lang']).to_bytes()
 
     return ""
