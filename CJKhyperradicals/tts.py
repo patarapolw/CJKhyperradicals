@@ -12,8 +12,6 @@ class Tts:
 
     def to_temp(self, temp: str=None):
         if temp is None:
-            if not os.path.exists('tmp'):
-                os.mkdir('tmp')
             temp = os.path.join('tmp', str(uuid4()) + '.mp3')
 
         atexit.register(os.remove, temp)
@@ -27,13 +25,13 @@ class Tts:
         return filename
 
     def to_bytes(self):
-        # temp = TemporaryFile()
-        # self.tts.write_to_fp(temp)
-        # print(temp.read())
-        #
-        # return temp.read()
-        with open(self.to_temp(), 'rb') as f:
-            return f.read()
+        temp = TemporaryFile()
+        self.tts.write_to_fp(temp)
+        temp.seek(0)
+
+        return temp.read()
+        # with open(self.to_temp(), 'rb') as f:
+        #     return f.read()
 
     def to_base64(self):
         return base64.b64encode(self.to_bytes())
