@@ -12,7 +12,7 @@ class Tts:
 
     def to_temp(self, temp: str=None):
         if temp is None:
-            temp = str(uuid4()) + '.mp3'
+            temp = os.path.join('tmp', str(uuid4()) + '.mp3')
 
         atexit.register(os.remove, temp)
         self.to_file(temp)
