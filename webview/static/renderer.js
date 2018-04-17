@@ -164,3 +164,13 @@ function setLang(lang){
         renderChar(content);
     })
 }
+
+$(document).ajaxSend(function( event, xhr, settings ){
+    if ( settings.url === "/" ){
+        $('.loading-container').show();
+    }
+}).ajaxComplete(function( event, xhr, settings ){
+    if ( settings.url === "/" ){
+        $('.loading-container').hide();
+    }
+})
