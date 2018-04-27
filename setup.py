@@ -16,7 +16,7 @@ setup(
     packages=find_packages(exclude=['tests', 'dev']),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['Flask', 'jieba', 'wordfreq', 'regex', 'requests'],
+    install_requires=['Flask', 'jieba', 'wordfreq', 'regex', 'requests', 'gtts'],
     extras_require={
         'dev': ['bs4'],
         'japanese': ['MeCab'],
