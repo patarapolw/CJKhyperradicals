@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 gtts = "*"
+flask = "*"
+jieba = "*"
+wordfreq = "*"
+regex = "*"
+requests = "*"
 
 [dev-packages]
 "bs4" = "*"
